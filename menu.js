@@ -79,10 +79,10 @@ function quesono(){
   if(aumentado){
     normalizado=true;
     aumentado=false;
-    cnvass.width=1480;
-    cnvass.height=820;
-    cnvasss.largura=1480;
-    cnvasss.altura=820;}}
+    cnvass.width=1600;
+    cnvass.height=950;
+    cnvasss.largura=1600;
+    cnvasss.altura=950;}}
 
 let zoomin = document.getElementById('a46');
 zoomin.addEventListener('click', quesonos);

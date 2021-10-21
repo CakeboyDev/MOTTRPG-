@@ -41,8 +41,8 @@ background: green;
 }
 #canvasco{
 position: absolute;
-top: 2vh;
-margin-left: 1.5vw;
+top: 2.5vh;
+margin-left: 2.5vw;
 border: solid 0.7vw black;
 min-width: 95vw;
 max-width: 95vw;
@@ -363,41 +363,8 @@ position: fixed;
 top: 79.5vh;
 font-size: 5vh;
 }
-#a44{
-color: red;
-padding: 2vh;
-background: none;
-z-index: 4;
-position: fixed;
-top: 12.0vh;
-left: 80vw;
-font-size: 6vh;
-}
-#a45{
-color: white;
-border: solid 1vh black;
-border-radius: 7%;
-padding: 2vh;
-padding-left: 2.5vw;
-padding-right: 2.5vw;
-background: black;
-z-index: 3;
-position: fixed;
-top: 14vh;
-left: 80vw;
-font-size: 2vh;
-opacity: 0.5;
-}
-#a46{
-color: red;
-padding: 2vh;
-background:none;
-z-index: 3;
-position: fixed;
-top: 12.5vh;
-left: 85vw;
-font-size: 6vh;
-}
+
+
 #menuzera{
   position: absolute;
   left: 49.5vw;

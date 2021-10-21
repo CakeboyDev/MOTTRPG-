@@ -4,7 +4,7 @@ let ctx = cnvass.getContext('2d');
 cnvv=document.getElementById('canvasco');
 cttx=cnvv.getContext('2d');
 document.body.appendChild(cnvv);
-let tDireita=39;tEsquerda=37;tCima=38;tBaixo=40;tZ=90;tShif=16;
+let tDireita=39;tEsquerda=37;tCima=38;tBaixo=40;tZ=90;tShif=16;toxaxa=192;
 let mDireita=false;mEsquerda=false;mCima=false;mBaixo=false; fundo=false; correr=false;atacar=false;atacarei=true;atacarius=false;praEsquerda=false;
 let praDireita=true; gamestart=false;combate=false;countcombat=0;
 document.getElementById('rardcor').value='';
@@ -26,6 +26,7 @@ let soco = document.getElementById('soko');
 let soco1 = document.getElementById('soko1');
 let soco2 = document.getElementById('soko2');
 let soco3 = document.getElementById('soko3');
+let toxanamao = false;
 ////////////////////////////////////////////////////////////////////////////////
 function savengoo(){
 let inpute=document.getElementById('rardcor').value;
@@ -67,17 +68,19 @@ let mundo ={
 let cam ={
   x: 0,
   y: 0,
+largura:1600,
+altura:950,
   atualiza:function(){
     this.x=p1.x-cnvasss.largura/2;
     this.y=p1.y-cnvasss.altura/2;
-  if(this.x>3100){
-    this.x=3100;}
+  if(this.x>3500){
+    this.x=3500;}
   if(this.x<-4000){
     this.x=-4000;}
   if(this.y>3500){
     this.y=3500;}
-  if(this.y<-4000){
-    this.y=-4000;}}}
+  if(this.y<-4600){
+    this.y=-4600;}}}
 ////////////////////////////////////////////////////////////////////////////////
 //OBJETOS
 
@@ -436,6 +439,10 @@ let p1={
   desenha:function(){
     if(gamestart){
 
+      if(p1.vida<=0){
+      alert('Você sobreviveu a '+data.dia+' estágio e '+data.minuto+' segundos.')};
+
+
       if(this.vida>0){
         vidinha1.x = this.x-60;
         vidinha1.y = this.y-240;
@@ -472,17 +479,17 @@ let p1={
       this.waist=p1.y-115;
       this.waistx=p1.x+3;
 
-      if(this.x<cam.x){
-        this.x=cam.x;}
+      if(this.x<-3000){
+        this.x=this.x+this.velocidade;}
 
-      if(this.x+this.largura>cam.x+cam.largura){
-        this.x=cam.x+cam.largura-this.largura;}
+      if(this.x+this.largura>4400){
+        this.x=this.x-this.velocidade;}
 
-      if(this.y+this.altura>cam.y+cam.altura){
-        this.y=cam.y+cam.altura-this.altura;}
+      if(this.y+this.altura>4000){
+        this.y=this.y-this.velocidade;}
 
-      if(this.y<cam.y){
-        this.y=cam.y;}
+      if(this.y<-4000){
+        this.y=this.y+p1.velocidade;}
 
         this.vidatual = this.vida/this.vidamax;
         this.fometual = this.fomi/this.fomemax;
@@ -524,6 +531,7 @@ let p1={
 }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+
 
 //NPCS
 let yasuo={
@@ -620,6 +628,9 @@ window.addEventListener('keyup',teclanot);
 //MOVIMENTAÇÃO E COMANDOS
 function tecla(e){
   key = e.keyCode;
+  if(key === toxaxa){
+    toxanamao=true;}
+
   if(key === tDireita){
     mDireita=true;
     praDireita=true;
@@ -639,6 +650,7 @@ function tecla(e){
 
 function teclanot(e){
   key = e.keyCode;
+
   if(key === tDireita){
     mDireita=false;}
   if(key === tEsquerda){
@@ -682,7 +694,7 @@ function move(){
     if(p1.fomi>=0){
     p1.fomi-=0.002}
     if(p1.fomi<=0&&p1.vida>=0){
-      p1.vida-=0.1;}
+      p1.vida-=0.05;}
 }
   if(correr==false){
     p1.velocidade=4;}}}
@@ -727,19 +739,16 @@ function render(){
     cttx.save();
     ctx.save();
 
-
     ctx.translate(-cam.x,-cam.y);
     cttx.translate(-cam.x,-cam.y);
-
 
       atkcdyi();
       mundo.atualiza();
       cam.atualiza();
       bg.desenha();
-
-
       colisors.atualiza();
       inimigos.atualiza();
+      modo.mudar();
       sede.atualiza();
       sede2.atualiza();
       sede3.atualiza();
@@ -764,17 +773,13 @@ function render(){
       chapeuteste.atualiza();
       bermateste.atualiza();
       camisateste.atualiza();
-
       atkbasD.atualiza();
       atkbasE.atualiza();
       if(p1.vida>0){
       vidinha1.atualiza();}
-
       luzeira.seila();
-      luzeiras.seila();
-
-
-
+      if(toxanamao){
+        luzeiras.seila();}
 
       if(vaquinha.fundo){
           vaquinha.desenha();
@@ -783,105 +788,22 @@ function render(){
           arvore.desenha();}
       if(yasuo.fundo){
           yasuo.desenha();}
-move();
-
-
-
-
-
-
-
-
-cttx.restore()
-
+    move();
+    cttx.restore()
     ctx.restore();
+data.atualiza();
+      horario.atualiza();
       hudzinha.atualiza();
       sombrinha.atualiza();
       carinha.atualiza();
       vidinha.atualiza();
       fome.atualiza();
       energia.atualiza();
-
-
-
 }}
 
-let luzlight={
-x:510,
-y:610,
-ligthenGradient:function() {
-    cttx.save();
-    cttx.globalCompositeOperation = 'lighter';
-    var rnd = 0.05 * Math.sin(1.1 * Date.now() / 1000);
-    radius = 100 * (1 + rnd);
-    var radialGradient = cttx.createRadialGradient(p1.x, p1.y, 30, p1.x, p1.y, 100);
-    radialGradient.addColorStop(0.0, '#BB9');
-    radialGradient.addColorStop(0.2 + rnd, '#AA8');
-     radialGradient.addColorStop(0.7 + rnd, '#330');
-    radialGradient.addColorStop(0.90, '#110');
-    radialGradient.addColorStop(1, '#000');
-    cttx.fillStyle = radialGradient;
-    cttx.beginPath();
-    cttx.arc(0, 0, 1, 0, 2 * 3.14);
-    cttx.fillRect(p1.x,p1.y,1000,1000);
-    cttx.restore();
-}}
 
-let modo={
-valor: 0
-}
 
-let luzeira = {
-x:0,
-y:0,
-seila:function(){
-cttx.save();
 
-  cttx.fillStyle="rgba(0,0,20,0.02)";
-  cttx.fillRect(p1.x-2000,p1.y-2000,cnvasss.largura*3 ,cnvasss.altura*3);
-cttx.restore();
-}}
-
-let luzeiras = {
-x:230,
-y:450,
-seila:function(){
-this.x=p1.x;
-this.y=p1.y;
-
-cttx.save();
-cttx.globalAlpha=0.01;
-let grd=cttx.createRadialGradient(p1.x-modo.valor,p1.y,210,p1.x-modo.valor,p1.y,300);
-grd.addColorStop(0.0, "rgba(0,0,55,1)");
-grd.addColorStop(0.4, "rgba(0,0,55,0.6)");
-
-grd.addColorStop(0.8, "rgba(0,0,55,0.2)");
-grd.addColorStop(1.0,"rgba(0,0,55,0)");
-  cttx.globalCompositeOperation = 'destination-out';
-  cttx.fillStyle=grd;
-  cttx.fillRect(p1.x-2000,p1.y-2000,4000,4000);
-cttx.restore();
-}
-}
-let luzeirass = {
-x:230,
-y:450,
-seila:function(){
-
-cttx.save();
-cttx.globalAlpha=0.01;
-let grd=cttx.createRadialGradient(200,300,110,300,100,500);
-grd.addColorStop(0.0, "rgba(0,0,55,1)");
-grd.addColorStop(0.4, "rgba(0,0,55,0.6)");
-
-grd.addColorStop(0.8, "rgba(0,0,55,0.2)");
-grd.addColorStop(1.0,"rgba(0,0,55,0)");
-  cttx.globalCompositeOperation = 'destination-out';
-  cttx.fillStyle=grd;
-  cttx.fillRect(0-400,0-400,2000,2000);
-cttx.restore();
-}
-}
 
 
 
